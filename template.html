@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <link
+      rel="stylesheet"
+      href="node_modules\gutenberg-css\dist\gutenberg.css"
+    />
+    <style>
+      table {
+        width: 100%;
+      }
+      footer {
+        text-align: center;
+        font-style: italic;
+      }
+    </style>
+  </head>
+  <body>
+    <h1>Invoice</h1>
+    <br /><br />
+    <p>
+      {{ company }}<br />
+      {{ street }} <br />
+      {{ city }}
+    </p>
+    <br /><br />
+    <table>
+      <thead>
+        <tr>
+          <th style="text-align: left">Product</th>
+          <th style="text-align: right">Price</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>{{ product }}</td>
+          <td style="text-align: right">£{{ price }} GBP</td>
+        </tr>
+      </tbody>
+    </table>
+    <br /><br />
+    <div>
+      <h5>Payment Details</h5>
+      <p>
+        Please make payment to: <br />
+        Test Bank <br />
+        IBAN - GB33BUKB20201555555555
+      </p>
+    </div>
+    <br /><br />
+    <footer>
+      <p>
+        ACME Inc. <br />
+        1 Oxford Street, <br />
+        London, UK <br />
+        support@acme.com
+      </p>
+    </footer>
+  </body>
+</html>

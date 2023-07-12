@@ -1,0 +1,22 @@
+{
+  "name": "invoicegen",
+  "version": "1.0.0",
+  "description": "Generate PDF Invoices",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/jsmiles/InvoiceGen.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/jsmiles/InvoiceGen/issues"
+  },
+  "homepage": "https://github.com/jsmiles/InvoiceGen#readme",
+  "dependencies": {
+    "gutenberg-css": "^0.7.0"
+  }
+}

@@ -115,6 +115,28 @@ $rows = $statement->fetchAll(PDO::FETCH_ASSOC);
     <main class="container">
       <h1>Welcome to InvoiceGen</h1>
       <p>This tool can be used to view invoices yet to be raised, add new items to the database or generate the PDF of an Invoice required.</p> 
+
+      <article>
+        <h4>Please Input each field to generate the Invoice</h4>
+        <form method="post">
+          
+          <label for="company">Company</label>
+          <input type="text" name="company" id="company">
+          <label for="street">Street</label>
+          <input type="text" name="street" id="street">
+          <label for="city">City</label>
+          <input type="text" name="city" id="city"> 
+          <label for="product">Product</label>
+          <input type="text" name="product" id="product">
+          <label for="price">Price</label>
+          <input type="text" name="price" id="price">
+          
+          <button style="width: 30%; margin-left: 35%;" formaction="gen.php">Generate PDF Invoice</button>
+          <button style="width: 30%; margin-left: 35%;" formaction="gen.php" class="secondary">Save in DB</button>
+        </form>
+      </article>
+
+      <h4>Currently Stored Invoices</h4>
       <table>
         <thead>
           <tr>
@@ -139,7 +161,7 @@ $rows = $statement->fetchAll(PDO::FETCH_ASSOC);
       </table>
       
       <article>
-        <form action="index.php#form-anchor" id="form-anchor" method="POST">
+        <form action="gen.php" id="form-anchor" method="POST">
           <label for="invoice">Invoice to be Generated</label>
           <select id="invoice" name="invoice" required>
             <option value="" selected>Select an Invoice</option>
@@ -158,7 +180,7 @@ $rows = $statement->fetchAll(PDO::FETCH_ASSOC);
             $invoice_pdo = new PDO('sqlite:db.sqlite');
             $inovice_statement = $invoice_pdo->query("SELECT * FROM invoices WHERE id = " . $val_id);
             $inovice_statement->execute();
-            $res = $inovice_statement->fetch(PDO::FETCH_ASSOC);#
+            $res = $inovice_statement->fetch(PDO::FETCH_ASSOC);
           } else {
             echo "<h4>Waiting for selection</h4>";
           }
@@ -247,10 +269,11 @@ $rows = $statement->fetchAll(PDO::FETCH_ASSOC);
         </div>
         </section>
       <?php endif; ?>
-      <button style="width: 30%; margin-left: 35%;">Generate PDF Invoice</button>
+    <button style="width: 30%; margin-left: 35%;">Generate PDF Invoice</button>
+  </article>
 
-
-    </article>
+  
+  
 
     </main>
     <footer style="padding-left: 47%;"> 
