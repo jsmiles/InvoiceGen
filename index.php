@@ -15,101 +15,6 @@ $rows = $statement->fetchAll(PDO::FETCH_ASSOC);
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@picocss/pico@1/css/pico.min.css">
   <title>InvoiceGen</title>
 
-  <style>
-			.invoice-box {
-				max-width: 800px;
-				margin: auto;
-				padding: 30px;
-				border: 1px solid #eee;
-				box-shadow: 0 0 10px rgba(0, 0, 0, 0.15);
-				font-size: 16px;
-				line-height: 24px;
-				font-family: 'Helvetica Neue', 'Helvetica', Helvetica, Arial, sans-serif;
-				color: #555;
-			}
-
-			.invoice-box table {
-				width: 100%;
-				line-height: inherit;
-				text-align: left;
-			}
-
-			.invoice-box table td {
-				padding: 5px;
-				vertical-align: top;
-			}
-
-			.invoice-box table tr td:nth-child(2) {
-				text-align: right;
-			}
-
-			.invoice-box table tr.top table td {
-				padding-bottom: 20px;
-			}
-
-			.invoice-box table tr.top table td.title {
-				font-size: 45px;
-				line-height: 45px;
-				color: #333;
-			}
-
-			.invoice-box table tr.information table td {
-				padding-bottom: 40px;
-			}
-
-			.invoice-box table tr.heading td {
-				background: #eee;
-				border-bottom: 1px solid #ddd;
-				font-weight: bold;
-			}
-
-			.invoice-box table tr.details td {
-				padding-bottom: 20px;
-			}
-
-			.invoice-box table tr.item td {
-				border-bottom: 1px solid #eee;
-			}
-
-			.invoice-box table tr.item.last td {
-				border-bottom: none;
-			}
-
-			.invoice-box table tr.total td:nth-child(2) {
-				border-top: 2px solid #eee;
-				font-weight: bold;
-			}
-
-			@media only screen and (max-width: 600px) {
-				.invoice-box table tr.top table td {
-					width: 100%;
-					display: block;
-					text-align: center;
-				}
-
-				.invoice-box table tr.information table td {
-					width: 100%;
-					display: block;
-					text-align: center;
-				}
-			}
-
-			/** RTL **/
-			.invoice-box.rtl {
-				direction: rtl;
-				font-family: Tahoma, 'Helvetica Neue', 'Helvetica', Helvetica, Arial, sans-serif;
-			}
-
-			.invoice-box.rtl table {
-				text-align: right;
-			}
-
-			.invoice-box.rtl table tr td:nth-child(2) {
-				text-align: left;
-			}
-		</style>
-
-
 </head>
 <body>
     <main class="container">
@@ -132,7 +37,7 @@ $rows = $statement->fetchAll(PDO::FETCH_ASSOC);
           <input type="text" name="price" id="price">
           
           <button style="width: 30%; margin-left: 35%;" formaction="gen.php">Generate PDF Invoice</button>
-          <button style="width: 30%; margin-left: 35%;" formaction="gen.php" class="secondary">Save in DB</button>
+          <button style="width: 30%; margin-left: 35%;" formaction="db_store.php" class="secondary">Save in DB</button>
         </form>
       </article>
 
@@ -143,8 +48,8 @@ $rows = $statement->fetchAll(PDO::FETCH_ASSOC);
             <th scope="col">Index</th>
             <th scope="col">Company</th>
             <th scope="col">Address</th>
-            <th scope="col">Amount Due</th>
-            <th scope="col">Date Due</th>
+            <th scope="col">Product</th>
+            <th scope="col">Price</th>
           </tr>
         </thead>
         <tbody>
@@ -153,8 +58,8 @@ $rows = $statement->fetchAll(PDO::FETCH_ASSOC);
             <th scope="row"><?= $v['id']; ?></th>
             <td><?= $v['company']; ?></td>
             <td><?= $v['city']; ?></td>
-            <td><?= $v['amount_due']; ?></td>
-            <td><?= $v['date_due']; ?></td>
+            <td><?= $v['product']; ?></td>
+            <td><?= $v['price']; ?></td>
           </tr>
           <?php endforeach; ?>
         </tbody>
@@ -182,98 +87,10 @@ $rows = $statement->fetchAll(PDO::FETCH_ASSOC);
             $inovice_statement->execute();
             $res = $inovice_statement->fetch(PDO::FETCH_ASSOC);
           } else {
-            echo "<h4>Waiting for selection</h4>";
+            echo "";
           }
         ?>
-      <?php if(isset($res)) : ?>
-      <section>
-        <div id="">
-          <div class="invoice-box">
-            <table cellpadding="0" cellspacing="0">
-              <tr class="top">
-                <td colspan="2">
-                  <table>
-                    <tr>
-                      <td class="title">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="56" height="56" fill="#000000" viewBox="0 0 256 256"><path d="M160,80a8,8,0,0,1,8-8h64a8,8,0,0,1,0,16H168A8,8,0,0,1,160,80Zm-24,78a42,42,0,0,1-42,42H32a8,8,0,0,1-8-8V64a8,8,0,0,1,8-8H90a38,38,0,0,1,25.65,66A42,42,0,0,1,136,158ZM40,116H90a22,22,0,0,0,0-44H40Zm80,42a26,26,0,0,0-26-26H40v52H94A26,26,0,0,0,120,158Zm128-6a8,8,0,0,1-8,8H169a32,32,0,0,0,56.59,11.2,8,8,0,0,1,12.8,9.61A48,48,0,1,1,248,152Zm-17-8a32,32,0,0,0-62,0Z"></path></svg>
-                      </td>
-
-                      <td>
-                        Invoice #: 123<br />
-                        Created: <?php
-                          $date = new DateTime(); 
-                          echo $date->format('l jS \o\f F Y');
-                          ?>
-                        <br />
-                        Due: <?php
-                          $date = new DateTime(); 
-                          $date->add(new DateInterval('P30D'));
-                          echo $date->format('l jS \o\f F Y');
-                          ?>
-                      </td>
-                    </tr>
-                  </table>
-                </td>
-              </tr>
-
-              <tr class="information">
-                <td colspan="2">
-                  <table>
-                    <tr>
-                      <td>
-                        <?= $res['company']; ?><br />
-                        <?= $res['street']; ?><br />
-                        <?= $res['city']; ?><br />
-                      </td>
-
-                      <td>
-                        Belance Corp.<br />
-                        John Doe<br />
-                        john@belance.com
-                      </td>
-                    </tr>
-                  </table>
-                </td>
-              </tr>
-
-              <tr class="heading">
-                <td>Payment Method</td>
-
-                <td></td>
-              </tr>
-
-              <tr class="details">
-                <td>Bank of ACME</td>
-                <td>IBAN: GB33BUKB20201555555555</td>
-              </tr>
-
-              <tr class="heading">
-                <td>Item</td>
-
-                <td>Price</td>
-              </tr>
-
-              <tr class="item last">
-                <td>Consulting Services</td>
-
-                <td><?= number_format($res['amount_due']);?></td>
-              </tr>
-
-              <tr class="total">
-                <td></td>
-
-                <td>Total: £<?= number_format($res['amount_due']);?></td>
-              </tr>
-            </table>
-          </div>
-        </div>
-        </section>
-      <?php endif; ?>
-    <button style="width: 30%; margin-left: 35%;">Generate PDF Invoice</button>
-  </article>
-
-  
-  
+      </article>
 
     </main>
     <footer style="padding-left: 47%;"> 

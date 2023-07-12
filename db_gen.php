@@ -19,8 +19,8 @@ try {
                     company text, 
                     street text, 
                     city text,
-                    amount_due integer, 
-                    date_due integer 
+                    product integer, 
+                    price integer 
                     )");
           
 if($count->execute()){
@@ -30,11 +30,11 @@ if($count->execute()){
 }	
  
  $my_conn->exec("INSERT INTO `invoices` 
-  (`id`, `company`, `street`, `city`, `amount_due`, `date_due`) VALUES
-  (1, 'Evil Empire Inc.', '7 Main St', 'NYC', 7200, 1023),
-  (2, 'Stark Enterprises', '12 Broadway', 'Chicago', 2400, 1023),
-  (3, 'Dow Chemical Corp', '148 Ponce De Leon', 'Atlanta', 3000, 1123),
-  (4, 'Tesla', '1800 San Mateo Drive', 'Palo Alto', 12000, 1223);");
+  (`id`, `company`, `street`, `city`, `product`, `price`) VALUES
+  (1, 'Evil Empire Inc.', '7 Main St', 'NYC', 'Laser Beams', 7200),
+  (2, 'Stark Enterprises', '12 Broadway', 'Chicago', 'Rocket Packs', 2400),
+  (3, 'Dow Chemical Corp', '148 Ponce De Leon', 'Atlanta', 'Chemical Waste', 3000),
+  (4, 'Tesla', '1800 San Mateo Drive', 'Palo Alto', 'Batteries', 12000);");
   // Close file db connection
   $my_conn = null;
 }
