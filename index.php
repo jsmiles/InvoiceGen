@@ -74,22 +74,8 @@ $rows = $statement->fetchAll(PDO::FETCH_ASSOC);
               <option><?= $v['id'] . ' - ' . $v['company']; ?></option>
             <?php endforeach; ?>
           </select> 
-          <button type="submit" name="submit" style="width: 30%; margin-left: 35%;" class="secondary">Select Invoice</button>       
+          <button type="submit" name="submit" style="width: 30%; margin-left: 35%;">Generate Selected Invoice</button>       
         </form>
-        <?php
-          if(isset($_POST['submit'])){
-            $selected_val = $_POST['invoice'];  
-            echo "<h3>You have selected: " .$selected_val ."</h3>";
-            
-            $val_id = substr($selected_val, 0, 1);
-            $invoice_pdo = new PDO('sqlite:db.sqlite');
-            $inovice_statement = $invoice_pdo->query("SELECT * FROM invoices WHERE id = " . $val_id);
-            $inovice_statement->execute();
-            $res = $inovice_statement->fetch(PDO::FETCH_ASSOC);
-          } else {
-            echo "";
-          }
-        ?>
       </article>
 
     </main>

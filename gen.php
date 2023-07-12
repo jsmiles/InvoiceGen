@@ -1,15 +1,31 @@
 <?php
+if(isset($_POST['invoice'])){
+  $selected_val = $_POST['invoice'];  
+  $val_id = substr($selected_val, 0, 1);
+  $invoice_pdo = new PDO('sqlite:db.sqlite');
+  $inovice_statement = $invoice_pdo->query("SELECT * FROM invoices WHERE id = " . $val_id);
+  $inovice_statement->execute();
+  $res = $inovice_statement->fetch(PDO::FETCH_ASSOC);
+  $company = $res["company"];
+  $street = $res["street"];
+  $city = $res["city"];
+  $product = $res["product"];
+  $price = $res["price"];
+} else {
+  $company = $_POST["company"];
+  $street = $_POST["street"];
+  $city = $_POST["city"];
+  $product = $_POST["product"];
+  $price = $_POST["price"];
+}
+
 
 require __DIR__ . "/vendor/autoload.php";
 
 use Dompdf\Dompdf;
 use Dompdf\Options;
 
-$company = $_POST["company"];
-$street = $_POST["street"];
-$city = $_POST["city"];
-$product = $_POST["product"];
-$price = $_POST["price"];
+
 
 $options = new Options;
 $options->setChroot(__DIR__);
